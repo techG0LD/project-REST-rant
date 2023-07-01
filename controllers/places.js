@@ -27,6 +27,23 @@ const router = require('express').Router()
 
 
 
+    // NEW PLACE FORM
+    router.get('/new', (req,res) => {
+        res.render('places/new')
+    })
+
+    router.post('/places', (req,res) => {
+        res.render('places/index')
+    })
+
+
+    // place Page
+    router.get('/places/:id', (req,res) => {
+        res.render('show')
+    })
+
+
+
 
 
 
