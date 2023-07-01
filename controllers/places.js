@@ -32,8 +32,9 @@ const router = require('express').Router()
         res.render('places/new')
     })
 
-    router.post('/places', (req,res) => {
-        res.render('places/index')
+    router.post('/', (req,res) => {
+        console.log(req.body)   //can check if your info is being recieved in  the backend via POST method from the form
+        res.send('places/index')
     })
 
 
