@@ -1,40 +1,44 @@
 const router = require('express').Router()
+const places = require('../models/places.js')
 
+
+    // Route to index page
     router.get('/', (req,res) => {
-        let places = [{
-            name: 'Chicas Taco',
-            city: 'Seattle',
-            state: 'WA',
-            cuisines: 'Mexican, Central-America',
-            pic: '/images/rest1.jpg',
-            attN:"Shea Rouda",
-            att1: "https://unsplash.com/@shrouda?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
-            att2:"https://unsplash.com/s/photos/chicos-tacos?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-            
-          }, {
-            name: 'Coding Cat Cafe',
-            city: 'Phoenix',
-            state: 'AZ',
-            cuisines: 'Coffee, Bakery',
-            pic: '/images/rest2.jpg',
-            attN:'Nathan Dumlao',
-            att1: "https://unsplash.com/@nate_dumlao?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText",
-            att2:"https://unsplash.com/images/food/coffee?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-          }]
-          
         res.render('places/index', {places})
     })
 
 
 
-    // NEW PLACE FORM
+    //  FORM PLACE TO ADD PLACE
     router.get('/new', (req,res) => {
         res.render('places/new')
     })
 
+    //  POST 
     router.post('/', (req,res) => {
-        console.log(req.body)   //can check if your info is being recieved in  the backend via POST method from the form
-        res.send('places/index')
+          
+        if(!req.body.pic) {
+            //Default image if one is not provided
+            req.body.pic = 'https://placekitten.com/400/400'
+        }
+
+        if(!req.body.city) {
+            //Default city if one is not provided
+            req.body.city = 'Earth'
+        }
+
+        if(!req.body.state) {
+            //Default state if one is not provided
+            req.body.state = 'Milky Way'
+        }
+
+        places.push(req.body)   ///adds the new default code to the places array or the elment in the places array ,not sure
+
+        //  console.log(req.body)  //can check if your info is being recieved in  the backend via POST method from the form
+
+        // res.render('places/index', {places})  this works but you need to pass in the places array unless it will give map error
+        
+        res.redirect('/places')   //redirects to the index page GET route
     })
 
 
