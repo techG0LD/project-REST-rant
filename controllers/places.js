@@ -37,14 +37,23 @@ const places = require('../models/places.js')
         //  console.log(req.body)  //can check if your info is being recieved in  the backend via POST method from the form
 
         // res.render('places/index', {places})  this works but you need to pass in the places array unless it will give map error
-        
+
         res.redirect('/places')   //redirects to the index page GET route
     })
 
 
-    // place Page
-    router.get('/places/:id', (req,res) => {
-        res.render('show')
+    // Route Show Place Page
+    router.get('/:id', (req,res) => {
+        let id = Number(req.params.id)
+        if(isNaN(id)){     //checks if id is a number 
+            res.render('error404')
+        }
+        else if (!places[id]) {       //second check is to see if that id has a corressponding index in the places array .. if not then go into this else if condition
+            res.render('error404')
+        }
+        else {            //once passing both checks. show page of place
+            res.render('places/show', {places:places[id]})
+        }
     })
 
 
