@@ -7,6 +7,11 @@ const places = require('../models/places.js')
         res.render('places/index', {places})
     })
 
+    // ROUTE TO EDIT PAGE
+    router.get('/:id/edit', (req,res) => {
+        res.render('edit')
+    })
+
 
 
     //  FORM PLACE TO ADD PLACE
@@ -52,11 +57,23 @@ const places = require('../models/places.js')
             res.render('error404')
         }
         else {            //once passing both checks. show page of place
-            res.render('places/show', {places:places[id]})
+            res.render('places/show', {places:places[id],id})
         }
     })
 
-
+    router.delete('/:id', (req,res) => {
+        let id= Number(req.params.id)
+        if(isNaN(id)){
+            res.render('error404')
+        }
+        else if (!places[id]){
+            res.render('error404')
+        }
+        else {
+            places.splice(id,1)
+            res.redirect('/places')
+        }
+    })
 
 
 
