@@ -3,20 +3,21 @@ const Def = require('../default')
 
 
 function show(data) {
+    console.log(data)
     return (
         <Def>
             <main>
                 {/* <h1>Show Page</h1> */}
-                <h1>{data.places.name}</h1>
+                <h1>{data.place.name}</h1>
                 <div id="pair">
                     <div id="side">
-                        <img src={data.places.pic} alt={data.places.name}/>
+                        <img src={data.place.pic} alt={data.place.name}/>
                     </div>
                     <div id ="side">
                         <h3>Rating</h3>
                     <p>Not Rated</p>
                     <h3>Description</h3>
-                    <p>Located in {data.places.city}, {data.places.state} and serving {data.places.cuisines}</p>
+                    <p>Located in {data.place.city}, {data.place.state} and serving {data.place.cuisines}</p>
                     </div> 
                 </div>
                
