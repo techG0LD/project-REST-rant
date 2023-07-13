@@ -102,14 +102,17 @@ const db = require('../models')
     // Route Show Place Page
     router.get('/:id', (req,res) => {
         db.Place.findById(req.params.id)
+        .populate('comments')
         .then(place => {
-             res.render('places/show', {place})  //redirects to the index page GET route)
+            console.log(place.comments)
+             res.render('places/show', {place})  
         })
         .catch(err => {
             console.log('err', err)
             res.render('error404')
         })
 
+        
 
         // let id = Number(req.params.id)
         // if(isNaN(id)){     //checks if id is a number 
@@ -122,6 +125,9 @@ const db = require('../models')
             //moved res.render in the mongo code then callback
         // }
     })
+    
+    
+
 
     router.delete('/:id', (req,res) => {
         let id= Number(req.params.id)
@@ -165,7 +171,44 @@ const db = require('../models')
         }
     })
 
+    // router.get('/:id/comment', (req,res) => {
+                
+    //                 res.send(`hi`)
+    //             })
 
+
+
+    router.post('/:id', (req,res) => {
+        console.log('where is the id', req.params.id)
+                    if(req.body.rant){   //if the checkbox is present,its checked(true)
+                        req.body.rant = true
+                    }
+                    else {
+                        req.body.rant = false
+                    }
+                    db.Place.findById(req.params.id)
+                    .then(place => {
+                        //todo : create comment
+                        db.Comment.create(req.body)
+                        .then(comment => {
+                            //tod: save comment id to place
+                            place.comments.push(comment.id)
+                            place.save()
+                            .then(() => {
+                                console.log(db.Place.id)
+                                res.redirect(`/places/${req.params.id}`)
+                            })
+                        })
+                        .catch(err => {
+                            res.render('error404')
+                        })
+                    })
+                    .catch(err => {
+                        res.render('error404')
+                    })
+                    
+                    
+                })
 
 
 
