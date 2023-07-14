@@ -7,7 +7,7 @@ function edit_form(data) {
         <Def>
             <main>
                 <h1>Edit Page</h1>
-                <form method="POST" action={`/places/${data.id}?_method=PUT`}>
+                <form method="POST" action={`/places/${data.places.id}?_method=PUT`}>
                 <div className='row'>
                 <div className='form-group col-sm-6'>
                     <label htmlFor="name">Place Name</label>

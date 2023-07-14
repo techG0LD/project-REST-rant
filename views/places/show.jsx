@@ -13,7 +13,7 @@ function show(data) {
     if (data.place.comments.length) {
         comments = data.place.comments.map(c => {
             return (
-                <div key={data.place._id} className='border'>   
+                <div key={data.place.id} className='border'>   
                     <h2 className='rant'>{c.rant ? 'Rant! |:<'  : "Rave! :D"}</h2>
                     <h4>{c.content}</h4>
                     <h3>
@@ -46,8 +46,8 @@ function show(data) {
                         <h4>Serving {data.place.cuisines}</h4>
 
                         <div>
-                            <a href={`/places/${data._id}/edit`} className="btn btn-warning">Edit</a>
-                            <form method = "POST" action={`/places/${data._id}?_method=DELETE`}>
+                            <a href={`/places/${data.place.id}/edit`} className="btn btn-warning">Edit</a>
+                            <form method = "POST" action={`/places/${data.place.id}?_method=DELETE`}>
                             <button type="submit" className="btn btn-danger">Delete</button>
                             </form>
                         </div>
@@ -64,7 +64,7 @@ function show(data) {
                 </div>
 
                 <div>
-                <form method="POST" action={`/places/${data._id}`}>
+                <form method="POST" action={`/places/${data.place.id}/comment`}>  
                 <div className='row'>
                 <div className='form-group col-sm-6'>
                     <label htmlFor="author">Author Name</label>

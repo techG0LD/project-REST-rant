@@ -27,9 +27,9 @@ const db = require('../models')
             res.render('error404')
         }
         else {
-           res.render('places/edit',{places:places[id],id})   //passing in data from the url to the view via query parameter
+          res.render('places/edit',{place:places[id]})   //passing in data from the url to the view via query parameter
         }
-        
+         
     })
 
 
@@ -178,7 +178,7 @@ const db = require('../models')
 
 
 
-    router.post('/:id', (req,res) => {
+    router.post('/:id/comment', (req,res) => {
         console.log('where is the id', req.params.id)
                     if(req.body.rant){   //if the checkbox is present,its checked(true)
                         req.body.rant = true
@@ -195,7 +195,7 @@ const db = require('../models')
                             place.comments.push(comment.id)
                             place.save()
                             .then(() => {
-                                console.log(db.Place.id)
+                                
                                 res.redirect(`/places/${req.params.id}`)
                             })
                         })
