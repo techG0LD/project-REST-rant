@@ -18,17 +18,29 @@ const db = require('../models')
 
     // ROUTE TO EDIT PAGE
     router.get('/:id/edit', (req,res) => {
-        let id= Number(req.params.id)
-        console.log(id)
-        if(isNaN(id)){
+        db.Place.findById(req.params.id)
+        .then(place => {
+            // console.log(place)    this is the place out of the list of places in a object form
+            res.render('places/edit',place)  //second arguement is the object used for its 'data' properties in the edit.jsx
+        })
+        .catch(err => {
             res.render('error404')
-        }
-        else if (!places[id]){
-            res.render('error404')
-        }
-        else {
-          res.render('places/edit',{place:places[id]})   //passing in data from the url to the view via query parameter
-        }
+        })
+
+
+
+
+        // let id= Number(req.params.id)
+        // console.log(id)
+        // if(isNaN(id)){ 
+        //     res.render('error404')                      this is used for local data
+        // }
+        // else if (!places[id]){
+        //     res.render('error404')
+        // }
+        // else {
+        //   res.render('places/edit',{place:places[id]})   //passing in data from the url to the view via query parameter
+        // }
          
     })
 
@@ -99,12 +111,15 @@ const db = require('../models')
     })
 
 
+
+
+
     // Route Show Place Page
     router.get('/:id', (req,res) => {
         db.Place.findById(req.params.id)
         .populate('comments')
         .then(place => {
-            console.log(place.comments)
+            // console.log(place.comments)
              res.render('places/show', {place})  
         })
         .catch(err => {
@@ -130,52 +145,95 @@ const db = require('../models')
 
 
     router.delete('/:id', (req,res) => {
-        let id= Number(req.params.id)
-        console.log(req.params)
-        if(isNaN(id)){
-            res.render('error404')
-        }
-        else if (!places[id]){
-            res.render('error404')
-        }
-        else {
-            places.splice(id,1)
+        db.Place.findByIdAndDelete(req.params.id)
+        .then (place => {
             res.redirect('/places')
-        }
+        })
+        .catch(err => {
+            console.log('err', err)
+            res.render('error404')
+        })
+
+
+
+
+
+        // let id= Number(req.params.id)
+        // console.log(req.params)
+        // if(isNaN(id)){
+        //     res.render('error404')
+        // }                                           this is with local data
+        // else if (!places[id]){
+        //     res.render('error404')
+        // }
+        // else {
+        //     places.splice(id,1)
+        //     res.redirect('/places')
+        // }
     })
+
+    
 
     // PUT ROUTE
     router.put('/:id', (req,res) => {
-        let id = Number(req.params.id)
+        db.Place.findByIdAndUpdate(req.params.id,req.body)
+        .then(() => {
+            res.redirect(`/places/${req.params.id}`)
+        })
+        .catch(err => {
+            console.log('err',err)
+            res.render('error404')
+        })
 
-        console.log(req.params)
-        if(isNaN(id)) {
-            res.render('error404')
-        }
-        else if (!places[id]) {
-            res.render('error404')
-        }
-        else {
-            if(!req.body.pic){
-                req.body.pic = 'http://placekitten.com/400/400'
-            }
-            if(!req.body.city){
-                req.body.city = 'Anytown'
-            }
-            if(!req.body.state){
-                req.body.state = 'USA'
-            }
-            //save the new data into places[id]
-            places[id] = req.body
-            res.redirect(`/places/${id}`)
-        }
+
+
+
+
+
+        // let id = Number(req.params.id)                  this is for local dataa
+
+        // console.log(req.params)
+        // if(isNaN(id)) {
+        //     res.render('error404')
+        // }
+        // else if (!places[id]) {
+        //     res.render('error404')
+        // }
+        // else {
+        //     if(!req.body.pic){
+        //         req.body.pic = 'http://placekitten.com/400/400'
+        //     }
+        //     if(!req.body.city){
+        //         req.body.city = 'Anytown'
+        //     }
+        //     if(!req.body.state){
+        //         req.body.state = 'USA'
+        //     }
+        //     //save the new data into places[id]
+        //     places[id] = req.body
+        //     res.redirect(`/places/${id}`)
+        // }
     })
 
-    // router.get('/:id/comment', (req,res) => {
-                
-    //                 res.send(`hi`)
-    //             })
 
+
+    // router.delete('/:id/comment/:commentId', (req,res) => {
+        
+    //     db.Place.findById(req.params.id)
+    //     .then(place => {
+    //         console.log(req.params.c.id)
+    //        db.Comment.findByIdAndDelete()
+    //           place.save()
+    //     })
+    //     .then(comment => {
+    //            console.log('here')
+    //         res.redirect(`/places/${req.params.id}`)
+    //     })
+    //     .catch(err => {
+    //         console.log('err', err)
+    //         res.render('error404')
+    //     })
+    // })
 
 
     router.post('/:id/comment', (req,res) => {
