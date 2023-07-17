@@ -5,7 +5,7 @@ const Def = require('../default.jsx')
 function edit_form(data) {
     // console.log(data)  check what data object you have
     return (
-        <Def>
+        <Def title="Edit Place">
             <main>
                 <h1>Edit Page</h1>
                 <form method="POST" action={`/places/${data.id}?_method=PUT`}>

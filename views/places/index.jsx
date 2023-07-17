@@ -16,9 +16,9 @@ function index(data){
                 </p>
                 {/* width = {400} height={400} */}
                 <img   src={place.pic} alt={place.name}/>
-                <div className='text-center'>
+                {/* <div className='text-center'>
                    Photo by <a href={place.att1}>{place.attN}</a> on <a href={place.att2}>Unsplash</a> 
-                </div>
+                </div> */}
                 <p className='text-center'>
                     Located in {place.city}, {place.state}
                 </p>
@@ -29,7 +29,7 @@ function index(data){
     })
    
     return (
-        <Def>
+        <Def  title = 'Places'>
             <main>
                 <h1>Places to Rant or Rave About</h1>
                 <div className='row'>

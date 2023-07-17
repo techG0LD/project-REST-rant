@@ -19,7 +19,7 @@ app.use('/places', require('./controllers/places'))
 
 
 app.get('/', (req,res) => {
-    res.render('home')
+    res.render('home',{title: 'Home'})  //passing in a objext to use in the home view 
 })
 
 app.get('*', (req,res) => {

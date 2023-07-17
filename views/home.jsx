@@ -1,9 +1,9 @@
 const React = require('react')
 const Def = require('./default')
 
-function home() {
+function home({title}) {
     return (
-        <Def>
+        <Def title = {title}>
             <main>
                 <h1><a href="/places">REST-Rant</a></h1>
                 <div>

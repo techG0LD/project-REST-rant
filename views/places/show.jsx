@@ -43,16 +43,16 @@ function show(data) {
                         <strong>- {c.author}</strong>
                     </h3>
                     <h4>Rating: {c.stars}</h4>
-                    <form method="POST" action ={`/places/${data.place.id}/comment/${c.id}?_method=DELETE`}>
+                    {/* <form method="POST" action ={`/places/${data.place.id}/comment/${c.id}?_method=DELETE`}>
                         <input type="submit" className='btn btn-danger' value="Delete Comment"></input>
-                    </form>
+                    </form> */}
                 </div>
             )
         })
     }
     
     return (
-        <Def>
+        <Def title = {data.place.name}>
             <main>
                 <div className='row'>
                     <div className='col-sm-6'>
